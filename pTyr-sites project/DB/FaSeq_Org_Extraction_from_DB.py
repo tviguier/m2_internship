@@ -31,8 +31,10 @@ print("")
 Stime = time.time()
 
 OUTPUT_FORMAT = ".fa"
-OUTPUT_NAME = f"{ORGANISM.replace(' ', '_')}_FaSeq_DB{OUTPUT_FORMAT}"
-OUTPUT_FILE = open(OUTPUT_NAME, "w")
+OUTPUT_NAME = f"FaSeq_DB_{ORGANISM.replace(' ', '_')}"
+OUTPUT_FILE = f"{OUTPUT_NAME}{OUTPUT_FORMAT}"
+
+OUTPUT = open(OUTPUT_FILE, "w")
 
 ORGANISM_mod = "[" + ORGANISM + "]"
 
@@ -51,27 +53,28 @@ while i < len(FaSeq_DB_PARSE) :
     
     if DESCRIPTION.find(ORGANISM_mod) != -1:
         
-        OUTPUT_FILE.write(Homo_DESCRIPTION + "\n")
-        OUTPUT_FILE.write(FASTA_SEQUENCE + "\n" + "\n")
+        OUTPUT.write(Homo_DESCRIPTION + "\n")
+        OUTPUT.write(FASTA_SEQUENCE + "\n" + "\n")
         
         COUNT += 1
         
     i += 1
 
-OUTPUT_FILE.close()    
+OUTPUT.close()    
 
-NEW_OUTPUT_NAME = f"{COUNT}_{OUTPUT_NAME}"
+NEW_OUTPUT_NAME = f"{OUTPUT_NAME}_{COUNT}"
+NEW_OUTPUT_FILE = f"{NEW_OUTPUT_NAME}{OUTPUT_FORMAT}"
 
 Etime = time.time()
 Rtime = Etime - Stime
 
-os.rename(OUTPUT_NAME, NEW_OUTPUT_NAME)
+os.rename(OUTPUT_FILE, NEW_OUTPUT_FILE)
 
 print("FASTA SEQUENCES EXTRACTION DONE")
 print("")
 print(f" - {COUNT} FASTA SEQUENCES EXTRACTED")
 print(f" - RUN TIME : {round(Rtime, 3)}")
-print(f" - '{NEW_OUTPUT_NAME}' CREATED")
+print(f" - '{NEW_OUTPUT_FILE}' CREATED")
 
 print("")
 print("DONE")
